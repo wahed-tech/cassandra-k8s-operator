@@ -859,7 +859,7 @@ CassKop will create a dedicated statefulset and service for each couple `dc-rack
 specified DC.
 
 
-![architecture](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/Orange-OpenSource/cassandra-k8s-operator/master/documentation/uml/architecture.puml)
+![architecture](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/wahed-tech/cassandra-k8s-operator/master/documentation/uml/architecture.puml)
 
 ### Sequences
 
@@ -1023,7 +1023,7 @@ Both `livenessProbe` and `readinessProbe` support two additional options:
 - `timeoutSeconds`: defines the timeout of the probe. CassKop uses 20 seconds.
 - `periodSeconds`: the period to wait between each call to a probe: CassKop uses 40 seconds.
 
-> TODO: This is actually not configurable by CassKop: [Issue102](https://github.com/Orange-OpenSource/cassandra-k8s-operator/issues/102)
+> TODO: This is actually not configurable by CassKop: [Issue102](https://github.com/wahed-tech/cassandra-k8s-operator/issues/102)
 
 
 ### Pod lifeCycle
@@ -1181,4 +1181,4 @@ To achieve this, we update the CRD to manage both :
 - The new topology section
 - The new CassandraRack
 
-![architecture](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/Orange-OpenSource/cassandra-k8s-operator/master/documentation/uml/crd.puml)
+![architecture](http://www.plantuml.com/plantuml/proxy?src=https://raw.github.com/wahed-tech/cassandra-k8s-operator/master/documentation/uml/crd.puml)

@@ -6,9 +6,9 @@ import (
 
 	framework "github.com/operator-framework/operator-sdk/pkg/test"
 	"github.com/stretchr/testify/assert"
-	"github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/apis"
-	api "github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
-	mye2eutil "github.com/Orange-OpenSource/cassandra-k8s-operator/test/e2eutil"
+	"github.com/wahed-tech/cassandra-k8s-operator/pkg/apis"
+	api "github.com/wahed-tech/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
+	mye2eutil "github.com/wahed-tech/cassandra-k8s-operator/test/e2eutil"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 )

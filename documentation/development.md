@@ -66,7 +66,7 @@ Checkout the project.
 ```sh
 $ mkdir -p $GOPATH/src/gitlab.si.francetelecom.fr/kubernetes/
 $ cd $GOPATH/src/gitlab.si.francetelecom.fr/kubernetes/
-$ git clone https://github.com/Orange-OpenSource/cassandra-k8s-operator.git
+$ git clone https://github.com/wahed-tech/cassandra-k8s-operator.git
 $ cd cassandra-k8s-operator
 ```
 ### Build CassKop

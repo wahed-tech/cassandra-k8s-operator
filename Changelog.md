@@ -49,9 +49,9 @@ change on statefulses. we can bypass this by increasing the maxPodUnavailable va
 
 ### Fixes
 
-- Fix [Issue 60](https://github.com/Orange-OpenSource/cassandra-k8s-operator/issues/60): Error when RollingUpdate on
+- Fix [Issue 60](https://github.com/wahed-tech/cassandra-k8s-operator/issues/60): Error when RollingUpdate on
   UpdateResource
-- Fix [Issue 59](https://github.com/Orange-OpenSource/cassandra-k8s-operator/issues/59): Error on UpdateConfigMap
+- Fix [Issue 59](https://github.com/wahed-tech/cassandra-k8s-operator/issues/59): Error on UpdateConfigMap
   vs UpdateStatefulset
 
 ## 0.1.2
@@ -137,7 +137,7 @@ debug:
 ### Features
 
 - [x] Rack Aware Deployment
-    - [x] Pod level get infos for Rack & DC. [MR #33](https://github.com/Orange-OpenSource/cassandra-k8s-operator/merge_requests/33)
+    - [x] Pod level get infos for Rack & DC. [MR #33](https://github.com/wahed-tech/cassandra-k8s-operator/merge_requests/33)
         - Exposes **CASSANDRA_RACK** env var in the Pod from `cassandraclusters.db.orange.com.rack` Pod Labels
         - Exposes **CASSANDRA_DC** env var in the Pod from `cassandraclusters.db.orange.com.dc` Pod Labels
     

@@ -21,7 +21,7 @@ orbs:
 
     jobs:
       e2e-orb:
-        working_directory: /home/circleci/go/src/github.com/Orange-OpenSource/cassandra-k8s-operator
+        working_directory: /home/circleci/go/src/github.com/wahed-tech/cassandra-k8s-operator
         parameters:
           test_name:
             description: name of the test in e2e code
@@ -96,8 +96,8 @@ orbs:
               command: |
                 kubectl create namespace cassandra-e2e
                 make docker-e2e-test-fix-arg <<parameters.test_name>> || {
-                  kubectl -n cassandra-e2e get pods ; 
-                  kubectl -n cassandra-e2e logs -l app=cassandra-k8s-operator --tail=100 | grep -v level=debug ; 
+                  kubectl -n cassandra-e2e get pods ;
+                  kubectl -n cassandra-e2e logs -l app=cassandra-k8s-operator --tail=100 | grep -v level=debug ;
                 kubectl get events --all-namespaces --sort-by .metadata.creationTimestamp ;
                 false;
                 }
@@ -105,7 +105,7 @@ orbs:
 jobs:
 
   build:
-    working_directory: /go/src/github.com/Orange-OpenSource/cassandra-k8s-operator
+    working_directory: /go/src/github.com/wahed-tech/cassandra-k8s-operator
     executor: casskop-build
     steps:
     - checkout
@@ -154,7 +154,7 @@ jobs:
 
 
   unit-test:
-    working_directory: /go/src/github.com/Orange-OpenSource/cassandra-k8s-operator
+    working_directory: /go/src/github.com/wahed-tech/cassandra-k8s-operator
     executor: casskop-build
     steps:
     - checkout
@@ -176,7 +176,7 @@ jobs:
 
 
   report:
-    working_directory: /go/src/github.com/Orange-OpenSource/cassandra-k8s-operator
+    working_directory: /go/src/github.com/wahed-tech/cassandra-k8s-operator
     executor: casskop-build
     steps:
     - checkout
@@ -205,7 +205,7 @@ jobs:
           -Dsonar.branch.name=${CIRCLE_BRANCH} \
           -Dsonar.organization=${SONAR_ORGANISATION} \
           -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.projectBaseDir=/go/src/github.com/Orange-OpenSource/cassandra-k8s-operator/ \
+          -Dsonar.projectBaseDir=/go/src/github.com/wahed-tech/cassandra-k8s-operator/ \
           -Dsonar.sources=. \
           -Dsonar.sources.inclusions="**/**.go" \
           -Dsonar.exclusions="**/*_test.go,**/vendor/**,**/sonar-scanner-3.3.0.1492-linux/**,**docs/**" \
@@ -227,7 +227,7 @@ jobs:
         key: sonar-scanner-3.3.0.1492-linux
         paths:
           - sonar-scanner-3.3.0.1492-linux
-          - /go/src/github.com/Orange-OpenSource/cassandra-k8s-operator/.sonar
+          - /go/src/github.com/wahed-tech/cassandra-k8s-operator/.sonar
     - store_test_results:
         path: reports
 
@@ -255,8 +255,8 @@ workflows:
             - unit-test
           filters:
             branches:
-              # report sonar only from canonical repository 
-              only: /^(?!pull\/).*$/ # https://stackoverflow.com/a/5334825/358804 
+              # report sonar only from canonical repository
+              only: /^(?!pull\/).*$/ # https://stackoverflow.com/a/5334825/358804
 
       - minikube/e2e-orb:
           name: e2e-test RollingRestart
