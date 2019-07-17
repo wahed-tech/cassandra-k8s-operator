@@ -117,7 +117,7 @@ func (cc *CassandraCluster) SetDefaults() bool {
 		if cc.InitCassandraRackList() < 1 {
 			logrus.Errorf("[%s]: We should have at list One Rack, Please correct the Error", cc.Name)
 		}
-		if cc.Status.SeedList == nil{
+		if cc.Status.SeedList == nil {
 			cc.Status.SeedList = cc.InitSeedList()
 		}
 		changed = true
@@ -443,7 +443,6 @@ func (cc *CassandraCluster) GetNodesPerRacks(dcRackName string) int32 {
 	return nodesPerRacks
 }
 
-
 //GetDCNodesPerRacksFromDCRackName send NodesPerRack used for the given dcRackName
 func (cc *CassandraCluster) GetDCRackNames() []string {
 	dcsize := cc.GetDCSize()
@@ -678,6 +677,7 @@ type Topology struct {
 
 type DCSlice []DC
 type RackSlice []Rack
+type TolerationSlice []Toleration
 
 // DC allow to configure Cassandra RC according to kubernetes nodeselector labels
 type DC struct {
@@ -709,6 +709,16 @@ type Rack struct {
 
 	//Labels used to target Kubernetes nodes
 	Labels map[string]string `json:"labels,omitempty"`
+
+	Tolerations TolerationSlice `json:"tolerations,omitempty"`
+}
+
+type Toleration struct {
+	Key               string `json:"key,omitempty"`
+	Operator          string `json:"operator,omitempty"`
+	Value             string `json:"value,omitempty"`
+	Effect            string `json:"effect,omitempty"`
+	TolerationSeconds *int64 `json:"toleration_seconds,omitempty"`
 }
 
 // PodPolicy defines the policy for pods owned by vault operator.
