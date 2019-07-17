@@ -6,7 +6,7 @@ entries:
     created: 2019-06-25T15:06:19.91185+02:00
     description: A Helm chart for CassKop - the Orange Cassandra Kubernetes operator
     digest: 988085142082d29ab5a9bdfacb4d88841cf810a8ebb2a73573ee14f5b3ed2ef5
-    home: https://github.com/Orange-OpenSource/cassandra-k8s-operator
+    home: https://github.com/wahed-tech/cassandra-k8s-operator
     keywords:
     - operator
     - cassandra
@@ -20,7 +20,7 @@ entries:
       name: jal06
     name: cassandra-operator
     sources:
-    - https://github.com/Orange-OpenSource/cassandra-k8s-operator
+    - https://github.com/wahed-tech/cassandra-k8s-operator
     urls:
     - cassandra-operator-0.3.2.tgz
     version: 0.3.2
@@ -29,7 +29,7 @@ entries:
     created: 2019-06-25T15:06:19.91142+02:00
     description: A Helm chart for CassKop - the Orange Cassandra Kubernetes operator
     digest: d4eb5ebe3de38e2d75184f3734e3f88ef9e82ebb88bc4beb44544f7b5b69702f
-    home: https://github.com/Orange-OpenSource/cassandra-k8s-operator
+    home: https://github.com/wahed-tech/cassandra-k8s-operator
     keywords:
     - operator
     - cassandra
@@ -43,7 +43,7 @@ entries:
       name: jal06
     name: cassandra-operator
     sources:
-    - https://github.com/Orange-OpenSource/cassandra-k8s-operator
+    - https://github.com/wahed-tech/cassandra-k8s-operator
     urls:
     - cassandra-operator-0.3.1.tgz
     version: 0.3.1

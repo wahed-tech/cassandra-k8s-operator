@@ -18,9 +18,9 @@
 # Name of this service/application
 SERVICE_NAME := cassandra-k8s-operator
 
-DOCKER_REPO_BASE ?= orangeopensource
+DOCKER_REPO_BASE ?= wahedtech
 #we could want to separate registry for branches
-DOCKER_REPO_BASE_TEST := orangeopensource
+DOCKER_REPO_BASE_TEST := wahedtech
 
 # Docker image name for this project
 IMAGE_NAME := $(SERVICE_NAME)
@@ -106,7 +106,7 @@ COMMIT=$(shell git rev-parse HEAD)
 
 
 # CMDs
-UNIT_TEST_CMD := KUBERNETES_CONFIG=`pwd`/config/test-kube-config.yaml POD_NAME=test go test --cover --coverprofile=coverage.out `go list ./... | grep -v e2e` > test-report.out 
+UNIT_TEST_CMD := KUBERNETES_CONFIG=`pwd`/config/test-kube-config.yaml POD_NAME=test go test --cover --coverprofile=coverage.out `go list ./... | grep -v e2e` > test-report.out
 UNIT_TEST_COVERAGE := go tool cover -html=coverage.out -o coverage.html
 GO_GENERATE_CMD := go generate `go list ./... | grep -v /vendor/`
 GO_LINT_CMD := golint `go list ./... | grep -v /vendor/`
@@ -119,7 +119,7 @@ APP_DIR := build/Dockerfile
 
 OPERATOR_SDK_VERSION=v0.7.0
 # workdir
-WORKDIR := /go/src/github.com/Orange-OpenSource/cassandra-k8s-operator
+WORKDIR := /go/src/github.com/wahed-tech/cassandra-k8s-operator
 #WORKDIR := $(PWD)
 
 UNAME_S := $(shell uname -s)
@@ -130,7 +130,7 @@ ifeq ($(UNAME_S),Darwin)
 	GOOS = darwin
 endif
 
-# Some other usefule make file for interracting with kubernetes 
+# Some other usefule make file for interracting with kubernetes
 include kube.mk
 
 #
@@ -142,7 +142,7 @@ include kube.mk
 default: build
 
 .DEFAULT_GOAL := help
-help:	
+help:
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
 ## Example section
@@ -176,7 +176,7 @@ build:
 ifdef PUSHLATEST
 	docker tag $(REPOSITORY):$(VERSION) $(REPOSITORY):latest
 endif
-#	
+#
 
 # Run a shell into the development docker image
 .PHONY: docker-build
@@ -232,7 +232,7 @@ endif
 
 
 pipeline:
-	docker run -ti --rm --privileged -v $(PWD):/go/src/github.com/Orange-OpenSource/cassandra-k8s-operator -w /go/src/github.com/Orange-OpenSource/cassandra-k8s-operator \
+	docker run -ti --rm --privileged -v $(PWD):/go/src/github.com/wahed-tech/cassandra-k8s-operator -w /go/src/github.com/wahed-tech/cassandra-k8s-operator \
   --env https_proxy=$(https_proxy) --env http_proxy=$(http_proxy) \
 	$(BUILD_IMAGE):$(OPERATOR_SDK_VERSION) bash
 
@@ -318,7 +318,7 @@ docker-unit-test:
 .PHONY: unit-test
 unit-test:
 	$(UNIT_TEST_CMD) && echo "success!" || { echo "failure!"; cat test-report.out; exit 1; }
-	cat test-report.out 
+	cat test-report.out
 	$(UNIT_TEST_COVERAGE)
 
 
@@ -332,7 +332,7 @@ go-lint:
 
 
 .PHONY: mocks
-mocks: 
+mocks:
 	docker run -ti --rm -v $(PWD):$(WORKDIR) -u $(UID):$(GID) --name $(SERVICE_NAME) $(BUILD_IMAGE):$(OPERATOR_SDK_VERSION) /bin/sh -c '$(MOCKS_CMD)'
 
 .PHONY: deps-development
@@ -353,7 +353,7 @@ ifeq ($(UNAME), Darwin)
 endif
 ifeq ($(UNAME), Linux)
 # do something osx
-	dep status -dot | dot -T png | display	
+	dep status -dot | dot -T png | display
 endif
 
 
@@ -380,7 +380,7 @@ e2e-scaledown:
 	operator-sdk test local ./test/e2e --image $(E2EIMAGE) --go-test-flags "-v -timeout 40m -run ^TestCassandraCluster$$/^group$$/^ClusterScaleDown$$" || { kubectl get events --all-namespaces --sort-by .metadata.creationTimestamp ; exit 1; }
 
 e2e-empty:
-	operator-sdk test local ./test/e2e --image $(E2EIMAGE) --go-test-flags "-v -timeout 40m -run ^empty$$" 
+	operator-sdk test local ./test/e2e --image $(E2EIMAGE) --go-test-flags "-v -timeout 40m -run ^empty$$"
 
 
 .PHONY: e2e-test-fix e2e-tet-fix-arg docker-e2e-test-fix docker-e2e-test-fix-arg
@@ -392,7 +392,7 @@ ifeq (e2e-test-fix-arg,$(firstword $(MAKECMDGOALS)))
   $(eval $(E2E_ARGS):;@:)
 endif
 e2e-test-fix-arg:
-ifeq ($(E2E_ARGS),)	
+ifeq ($(E2E_ARGS),)
 	@echo "args are: RollingRestart ; ClusterScaleDown ; ClusterScaleUp ; ClusterScaleDownSimple" && exit 1
 endif
 	operator-sdk test local ./test/e2e --debug --image $(E2EIMAGE) --go-test-flags "-v -timeout 60m -run ^TestCassandraCluster$$/^group$$/^$(E2E_ARGS)$$" --namespace cassandra-e2e || { kubectl get events --all-namespaces --sort-by .metadata.creationTimestamp ; exit 1; }
@@ -408,7 +408,7 @@ ifeq (docker-e2e-test-fix-arg,$(firstword $(MAKECMDGOALS)))
   $(eval $(E2E_ARGS):;@:)
 endif
 docker-e2e-test-fix-arg:
-ifeq ($(E2E_ARGS),)	
+ifeq ($(E2E_ARGS),)
 	@echo "args are: RollingRestart ; ClusterScaleDown ; ClusterScaleUp ; ClusterScaleDownSimple" && exit 1
 endif
 #	docker run --rm -v $(PWD):$(WORKDIR) -v $(KUBECONFIG):/root/.kube/config -v $(MINIKUBE_CONFIG):$(MINIKUBE_CONFIG_MOUNT)  $(BUILD_IMAGE):$(OPERATOR_SDK_VERSION) /bin/bash -c 'operator-sdk test local ./test/e2e --debug --image $(E2EIMAGE) --go-test-flags "-v -timeout 60m -run ^TestCassandraCluster$$/^group$$/^$(E2E_ARGS)$$" --namespace cassandra-e2e' && echo 0 > res || echo 1 > res

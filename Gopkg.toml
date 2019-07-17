@@ -65,6 +65,9 @@ required = [
   name = "github.com/swarvanusg/go_jolokia"
   branch = "master"
 
+[[override]]
+  name = "github.com/wahed-tech/cassandra-k8s-operator"
+  branch = "master"
 
 [prune]
   go-tests = true

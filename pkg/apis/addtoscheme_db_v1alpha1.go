@@ -15,7 +15,7 @@
 package apis
 
 import (
-	"github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
+	"github.com/wahed-tech/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
 )
 
 func init() {

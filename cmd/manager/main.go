@@ -24,10 +24,10 @@ import (
 	// Import all Kubernetes client auth plugins (e.g. Azure, GCP, OIDC, etc.)
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
-	"github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/apis"
-	api "github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
-	"github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/controller"
-	"github.com/Orange-OpenSource/cassandra-k8s-operator/version"
+	"github.com/wahed-tech/cassandra-k8s-operator/pkg/apis"
+	api "github.com/wahed-tech/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
+	"github.com/wahed-tech/cassandra-k8s-operator/pkg/controller"
+	"github.com/wahed-tech/cassandra-k8s-operator/version"
 	"github.com/operator-framework/operator-sdk/pkg/k8sutil"
 	"github.com/operator-framework/operator-sdk/pkg/leader"
 	"github.com/operator-framework/operator-sdk/pkg/metrics"

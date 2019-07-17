@@ -21,7 +21,7 @@ import (
 	goctx "context"
 
 	framework "github.com/operator-framework/operator-sdk/pkg/test"
-	api "github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
+	api "github.com/wahed-tech/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

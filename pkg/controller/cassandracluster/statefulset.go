@@ -24,8 +24,8 @@ import (
 
 	"github.com/kylelemons/godebug/pretty"
 
-	api "github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
-	"github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/k8s"
+	api "github.com/wahed-tech/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
+	"github.com/wahed-tech/cassandra-k8s-operator/pkg/k8s"
 	"github.com/sirupsen/logrus"
 	appsv1 "k8s.io/api/apps/v1"
 	apiequality "k8s.io/apimachinery/pkg/api/equality"

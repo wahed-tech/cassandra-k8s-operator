@@ -25,9 +25,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
-	api "github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
+	api "github.com/wahed-tech/cassandra-k8s-operator/pkg/apis/db/v1alpha1"
 
-	"github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/k8s"
+	"github.com/wahed-tech/cassandra-k8s-operator/pkg/k8s"
 
 	"sort"
 	"strconv"

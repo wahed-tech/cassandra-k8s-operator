@@ -86,10 +86,10 @@ RUN curl -L https://storage.googleapis.com/kubernetes-release/release/$(curl -s 
 
 
 #Add helm client
-RUN curl -L https://storage.googleapis.com/kubernetes-helm/helm-v2.12.2-linux-amd64.tar.gz -o helm.tar.gz \ 
+RUN curl -L https://storage.googleapis.com/kubernetes-helm/helm-v2.12.2-linux-amd64.tar.gz -o helm.tar.gz \
     && tar zxf helm.tar.gz \
     && mv linux-amd64/helm /usr/local/bin \
-    && rm -rf helm.tar.gz linux-amd64 
+    && rm -rf helm.tar.gz linux-amd64
 
 ARG OPERATOR_SDK_VERSION
 # Install Operator SDK
@@ -110,6 +110,6 @@ RUN mkdir -p $GOPATH/src/github.com/operator-framework \
 
 #USER circleci
 
-WORKDIR /go/src/github.com/Orange-OpenSource/cassandra-k8s-operator
+WORKDIR /go/src/github.com/wahed-tech/cassandra-k8s-operator
 
 CMD ["/bin/sh"]

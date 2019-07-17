@@ -15,7 +15,7 @@
 package controller
 
 import (
-	"github.com/Orange-OpenSource/cassandra-k8s-operator/pkg/controller/cassandracluster"
+	"github.com/wahed-tech/cassandra-k8s-operator/pkg/controller/cassandracluster"
 )
 
 func init() {
