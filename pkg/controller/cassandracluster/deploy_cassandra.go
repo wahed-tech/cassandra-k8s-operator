@@ -103,7 +103,7 @@ func (rcc *ReconcileCassandraCluster) ensureCassandraStatefulSet(cc *api.Cassand
 
 	labels, nodeSelector := k8s.GetDCRackLabelsAndNodeSelectorForStatefulSet(cc, dc, rack)
 
-	ss := generateCassandraStatefulSet(cc, status, dcName, dcRackName, labels, nodeSelector, nil)
+	ss := generateCassandraStatefulSet(cc, status, dc, rack, dcName, dcRackName, labels, nodeSelector, nil)
 	k8s.AddOwnerRefToObject(ss, k8s.AsOwner(cc))
 
 	err := rcc.CreateOrUpdateStatefulSet(ss, status, dcRackName)

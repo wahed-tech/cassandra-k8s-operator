@@ -172,7 +172,7 @@ build:
 	operator-sdk version
 	operator-sdk generate k8s
 	echo "Build Cassandra Operator"
-	operator-sdk build $(REPOSITORY):$(VERSION) --docker-build-args "--build-arg https_proxy=$$https_proxy --build-arg http_proxy=$$http_proxy"
+	operator-sdk build $(REPOSITORY):$(VERSION) --image-build-args "--build-arg https_proxy=$$https_proxy --build-arg http_proxy=$$http_proxy"
 ifdef PUSHLATEST
 	docker tag $(REPOSITORY):$(VERSION) $(REPOSITORY):latest
 endif
