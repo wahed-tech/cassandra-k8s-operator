@@ -97,7 +97,7 @@ func generateCassandraService(cc *api.CassandraCluster, dcName string, labels ma
 					Name:     cassandraPortName,
 				},
 			},
-			Selector: labels,
+			Selector:                 labels,
 			PublishNotReadyAddresses: true,
 		},
 	}
@@ -211,6 +211,7 @@ func generateVolumeClaimTemplate(cc *api.CassandraCluster, labels map[string]str
 }
 
 func generateCassandraStatefulSet(cc *api.CassandraCluster, status *api.CassandraClusterStatus,
+	dc int, rack int,
 	dcName string, dcRackName string,
 	labels map[string]string, nodeSelector map[string]string, ownerRefs []metav1.OwnerReference) *appsv1.StatefulSet {
 	name := cc.GetName()
@@ -240,6 +241,8 @@ func generateCassandraStatefulSet(cc *api.CassandraCluster, status *api.Cassandr
 	seedList := cc.GetSeedList(&status.SeedList)
 
 	terminationPeriod := int64(api.DefaultTerminationGracePeriodSeconds)
+
+	tolerations := generateTolerations(cc.Spec, dc, rack)
 
 	ss := &appsv1.StatefulSet{
 		TypeMeta: metav1.TypeMeta{
@@ -273,13 +276,13 @@ func generateCassandraStatefulSet(cc *api.CassandraCluster, status *api.Cassandr
 						NodeAffinity:    nodeAffinity,
 						PodAntiAffinity: createPodAntiAffinity(cc.Spec.HardAntiAffinity, k8s.LabelsForCassandra(cc)),
 					},
+					Tolerations: tolerations,
 					SecurityContext: &v1.PodSecurityContext{
 						RunAsUser:    cc.Spec.RunAsUser,
 						RunAsNonRoot: func(b bool) *bool { return &b }(true),
 
 						FSGroup: func(i int64) *int64 { return &i }(1),
 					},
-
 					Containers: []v1.Container{
 						v1.Container{
 							Name:            cassandraContainerName,
@@ -517,6 +520,20 @@ func generateCassandraStatefulSet(cc *api.CassandraCluster, status *api.Cassandr
 func generateResourceQuantity(qs string) resource.Quantity {
 	q, _ := resource.ParseQuantity(qs)
 	return q
+}
+
+func generateTolerations(spec api.CassandraClusterSpec, dc int, rack int) []v1.Toleration {
+	ts := make([]v1.Toleration, 0, len(spec.Topology.DC[dc].Rack[rack].Tolerations))
+	for _, t := range spec.Topology.DC[dc].Rack[rack].Tolerations {
+		ts = append(ts, v1.Toleration{
+			Key:               t.Key,
+			Operator:          v1.TolerationOperator(t.Operator),
+			Value:             t.Value,
+			Effect:            v1.TaintEffect(t.Effect),
+			TolerationSeconds: t.TolerationSeconds,
+		})
+	}
+	return ts
 }
 
 func defineJvmMemory(resources v1.ResourceRequirements) JvmMemory {
