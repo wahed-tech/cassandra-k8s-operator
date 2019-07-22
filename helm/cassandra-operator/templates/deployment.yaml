@@ -1,39 +1,38 @@
+---
+# Source: cassandra-operator/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "cassandra-operator.fullname" . }}
+  name: casskop-cassandra-operator
+  namespace: cassandra
   labels:
-    app: {{ template "cassandra-operator.name" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
-    heritage: {{ .Release.Service }}
+    app: cassandra-operator
+    chart: cassandra-operator-0.3.3
+    heritage: Tiller
     operator: cassandra
-    release: {{ .Release.Name }}
+    release: casskop
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: {{ template "cassandra-operator.name" . }}
+      name: cassandra-operator
   template:
     metadata:
       labels:
-        name: {{ template "cassandra-operator.name" . }}
-        app: {{ template "cassandra-operator.name" . }}
+        name: cassandra-operator
+        app: cassandra-operator
         operator: cassandra
-        release: {{ .Release.Name }}
+        release: casskop
     spec:
-{{- if .Values.image.imagePullSecrets.enabled }}
-      imagePullSecrets:
-        - name: {{ .Values.image.imagePullSecrets.name }}
-{{- end }}
-{{- if .Values.rbacEnable }}
-      serviceAccountName: {{ template "cassandra-operator.name" . }}
-{{- end }}
+      serviceAccountName: cassandra-operator
       securityContext:
         runAsUser: 1000
+      imagePullSecrets:
+        - name: wahedtech-dockercloud-cred
       containers:
-      - name: {{ template "cassandra-operator.name" . }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-        imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+      - name: cassandra-operator
+        image: "wahedtech/cassandra-k8s-operator:0.3.3"
+        imagePullPolicy: "Always"
         command:
         - cassandra-k8s-operator
         readinessProbe:
@@ -44,7 +43,13 @@ spec:
           periodSeconds: 10
           failureThreshold: 1
         resources:
-{{ toYaml .Values.resources | indent 10 }}
+          limits:
+            cpu: 1
+            memory: 512Mi
+          requests:
+            cpu: 10m
+            memory: 50Mi
+
         env:
           - name: WATCH_NAMESPACE
             valueFrom:
@@ -56,7 +61,5 @@ spec:
                 fieldPath: metadata.name
           - name: OPERATOR_NAME
             value: "cassandra-operator"
-{{- if .Values.debug }}
           - name: LOG_LEVEL
             value: Debug
-{{- end }}

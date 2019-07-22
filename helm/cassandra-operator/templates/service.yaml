@@ -1,19 +1,21 @@
-{{- if .Values.metricService }}
+---
+# Source: cassandra-operator/templates/service.yaml
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "cassandra-operator.name" . }}-metrics
+  name: cassandra-operator-metrics
+  namespace: cassandra
   labels:
     component: app
-    app: {{ template "cassandra-operator.name" . }}-metrics
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
+    app: cassandra-operator-metrics
+    chart: cassandra-operator-0.3.3
+    heritage: Tiller
+    release: casskop
 spec:
   selector:
-    app: {{ template "cassandra-operator.name" . }}
+    app: cassandra-operator
   ports:
   - name: metrics
     port: 9710
     protocol: TCP
-{{- end }}

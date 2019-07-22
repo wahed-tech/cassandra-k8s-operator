@@ -1,18 +1,20 @@
-{{- if .Values.rbacEnable }}
+---
+# Source: cassandra-operator/templates/rolebinding.yaml
+
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   labels:
-    app: {{ template "cassandra-operator.name" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-  name: {{ template "cassandra-operator.name" . }}
+    app: cassandra-operator
+    chart: cassandra-operator-0.3.3
+    heritage: Tiller
+    release: casskop
+  name: cassandra-operator
+  namespace: cassandra
 subjects:
 - kind: ServiceAccount
-  name: {{ template "cassandra-operator.name" . }}
+  name: cassandra-operator
 roleRef:
   kind: Role
-  name: {{ template "cassandra-operator.name" . }}
+  name: cassandra-operator
   apiGroup: rbac.authorization.k8s.io
-{{- end }}

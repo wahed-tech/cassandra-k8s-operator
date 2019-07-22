@@ -4,8 +4,8 @@ name: cassandra-operator
 home: https://github.com/wahed-tech/cassandra-k8s-operator
 sources:
   - https://github.com/wahed-tech/cassandra-k8s-operator
-version: 0.3.2
-appVersion: 0.3.2-master
+version: 0.3.3
+appVersion: 0.3.3-master
 icon:
 maintainers:
   - name: allamand

@@ -22,8 +22,8 @@ entries:
     sources:
     - https://github.com/wahed-tech/cassandra-k8s-operator
     urls:
-    - cassandra-operator-0.3.2.tgz
-    version: 0.3.2
+    - cassandra-operator-0.3.3.tgz
+    version: 0.3.3
   - apiVersion: v1
     appVersion: 0.3.1-mater
     created: 2019-06-25T15:06:19.91142+02:00
