@@ -242,7 +242,9 @@ func generateCassandraStatefulSet(cc *api.CassandraCluster, status *api.Cassandr
 
 	terminationPeriod := int64(api.DefaultTerminationGracePeriodSeconds)
 
-	tolerations := generateTolerations(cc.Spec, dc, rack)
+	tolerations := generateTolerations(spec, dc, rack)
+
+	snapshotSidecar := getSnapshotSidecar(spec, name, volumemounts)
 
 	ss := &appsv1.StatefulSet{
 		TypeMeta: metav1.TypeMeta{
@@ -479,6 +481,10 @@ func generateCassandraStatefulSet(cc *api.CassandraCluster, status *api.Cassandr
 		},
 	}
 
+	if snapshotSidecar != nil {
+		ss.Spec.Template.Spec.Containers = append(ss.Spec.Template.Spec.Containers, *snapshotSidecar)
+	}
+
 	//Add secrets
 
 	if (cc.Spec.ImagePullSecret != v1.LocalObjectReference{}) {
@@ -534,6 +540,28 @@ func generateTolerations(spec api.CassandraClusterSpec, dc int, rack int) []v1.T
 		})
 	}
 	return ts
+}
+
+func getSnapshotSidecar(spec api.CassandraClusterSpec, name string, mounts []v1.VolumeMount) *v1.Container {
+	if spec.SnapshotSidecar == nil {
+		return nil
+	}
+
+	ss := *spec.SnapshotSidecar
+	ss.Env = append(ss.Env, v1.EnvVar{
+		Name:  "NODE_NAME",
+		Value: name,
+	})
+
+	c := &v1.Container{
+		Name:            "snapshot-sidecar",
+		Image:           strings.Join([]string{ss.BaseImage, ":", ss.Version}, ""),
+		Env:             ss.Env,
+		ImagePullPolicy: "Always",
+		VolumeMounts:    mounts,
+	}
+
+	return c
 }
 
 func defineJvmMemory(resources v1.ResourceRequirements) JvmMemory {

@@ -667,12 +667,21 @@ type CassandraClusterSpec struct {
 
 	//Topology to create Cassandra DC and Racks and to target appropriate Kubernetes Nodes
 	Topology Topology `json:"topology,omitempty"`
+
+	SnapshotSidecar *SnapshotSidecar `json:"snapshotSidecar,omitempty"`
 }
 
 // Topology allow to configure the Cassandra Topology according to kubernetes Nodes labels
 type Topology struct {
 	//Liste of DC defined in the CassandraCluster
 	DC DCSlice `json:"dc,omitempty"`
+}
+
+type SnapshotSidecar struct {
+	BaseImage        string                    `json:"baseImage"`
+	Version          string                    `json:"version"`
+	ImagePullSecrets []v1.LocalObjectReference `json:"imagePullSecrets,omitempty"`
+	Env              []v1.EnvVar               `json:"env,omitempty"`
 }
 
 type DCSlice []DC
