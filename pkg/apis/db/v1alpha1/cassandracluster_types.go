@@ -680,7 +680,6 @@ type Topology struct {
 type SnapshotSidecar struct {
 	BaseImage        string                    `json:"baseImage"`
 	Version          string                    `json:"version"`
-	ImagePullSecrets []v1.LocalObjectReference `json:"imagePullSecrets,omitempty"`
 	Env              []v1.EnvVar               `json:"env,omitempty"`
 }
 
